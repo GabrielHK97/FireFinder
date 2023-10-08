@@ -10,7 +10,7 @@ export default defineConfig({
 	plugins: [
 		sveltekit(),
 		VitePWA(),
-		SvelteKitPWA({ strategies: 'injectManifest', filename: 'service-worker.js' })
+		//SvelteKitPWA({ strategies: 'injectManifest', filename: 'service-worker.js' })
 	],
 	optimizeDeps: {
 		esbuildOptions: {
