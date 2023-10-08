@@ -4,7 +4,7 @@ import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfil
 import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
 import rollupNodePolyFill from 'rollup-plugin-polyfill-node';
 import { SvelteKitPWA } from '@vite-pwa/sveltekit';
-import { VitePWA } from 'vite-plugin-pwa'
+import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
 	server: {
@@ -15,8 +15,7 @@ export default defineConfig({
 	},
 	plugins: [
 		sveltekit(),
-		//VitePWA(),
-		SvelteKitPWA({filename: 'worker.js' })
+		VitePWA()
 	],
 	optimizeDeps: {
 		esbuildOptions: {

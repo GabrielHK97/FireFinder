@@ -17,8 +17,8 @@ const LeaftletMap = create_ssr_component(($$result, $$props, $$bindings, slots) 
   let radius = minRadius;
   let coords;
   let fires;
-  let subscription;
   let click;
+  let serviceWorkerRegistration;
   async function setFires(mapBound2) {
     const date = /* @__PURE__ */ new Date();
     const offset = date.getTimezoneOffset();
@@ -44,9 +44,7 @@ const LeaftletMap = create_ssr_component(($$result, $$props, $$bindings, slots) 
   function sendNotifications() {
     for (const fire of fires) {
       if (isInsideNotificationCircle([fire.latitude, fire.longitude])) {
-        subscription["message"] = "There is fire near you!";
-        axios.defaults.baseURL = "https://firefinderpushnotification-production.up.railway.app/";
-        axios.post("notifications", subscription);
+        serviceWorkerRegistration.showNotification("There is fire near you!");
         break;
       }
     }

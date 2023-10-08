@@ -25,6 +25,7 @@
 	let fires: any;
 	let subscription: any;
 	let click: any;
+	let serviceWorkerRegistration: any;
 
 	// 1: World
 	// 5: Landmass/continent
@@ -185,9 +186,7 @@
 	function sendNotifications(): void {
 		for (const fire of fires) {
 			if (isInsideNotificationCircle([fire.latitude, fire.longitude])) {
-				subscription['message'] = 'There is fire near you!';
-				axios.defaults.baseURL = import.meta.env.VITE_API_PUSH;
-				axios.post('notifications', subscription);
+				serviceWorkerRegistration.showNotification('There is fire near you!');
 				break;
 			}
 		}
@@ -197,8 +196,9 @@
 		if (browser && navigator) {
 			navigator.geolocation.getCurrentPosition(async (position: GeolocationPosition) => {
 				await setUpLeafletMap(position);
-				await navigator.serviceWorker.register('/worker.js', { scope: '/' });
+				await navigator.serviceWorker.register('service-worker.js', { scope: '/' });
 				navigator.serviceWorker.ready.then((registration) => {
+					serviceWorkerRegistration = registration;
 					Notification.requestPermission()
 						.then(() => {
 							const options = {
