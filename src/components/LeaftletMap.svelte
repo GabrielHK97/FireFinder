@@ -1,5 +1,5 @@
 <script lang="ts">
-	import "leaflet/dist/leaflet.css";
+	import 'leaflet/dist/leaflet.css';
 	import { browser } from '$app/environment';
 	import { onDestroy, onMount } from 'svelte';
 	import '../app.css';
@@ -8,6 +8,8 @@
 	import axios from 'axios';
 	import { parse } from 'csv-parse/sync';
 	import { vapidKey } from '../vapid-key';
+	import MarkerPopup from './MarkerPopup.svelte';
+	import { newLocation } from '../writables/newLocation.writable';
 
 	let map: any;
 	let mapElement: any;
@@ -22,12 +24,34 @@
 	let location: any;
 	let fires: any;
 	let subscription: any;
+	let click: any;
 
 	// 1: World
 	// 5: Landmass/continent
 	// 10: City
 	// 15: Streets
 	// 20: Buildings
+
+	function bindPopup(marker: any, create: any) {
+		let popupComponent: any;
+		marker
+			.bindPopup(() => {
+				let container = leaflet.DomUtil.create('div');
+				popupComponent = create(container);
+				return container;
+			})
+			.openPopup();
+
+		marker.on('popupclose', () => {
+			if (popupComponent) {
+				let old = popupComponent;
+				popupComponent = null;
+				setTimeout(() => {
+					old.$destroy();
+				}, 500);
+			}
+		});
+	}
 
 	function setLocatiionAndRadius(): void {
 		if (leaflet) {
@@ -72,7 +96,7 @@
 		axios.defaults.baseURL = 'https://firms.modaps.eosdis.nasa.gov';
 		const response = (
 			await axios.get(
-				`/api/area/csv/7582abe461432d62b73c44214d87cc3b/MODIS_NRT/${mapBound.west},${mapBound.south},${mapBound.east},${mapBound.north}/1/2023-10-07`//
+				`/api/area/csv/7582abe461432d62b73c44214d87cc3b/MODIS_NRT/${mapBound.west},${mapBound.south},${mapBound.east},${mapBound.north}/1/${formattedDate}` //
 			)
 		).data;
 		fires = parse(response, {
@@ -98,6 +122,26 @@
 					east: boundaries._northEast.lng,
 					north: boundaries._northEast.lat
 				};
+			})
+			.on('click', (e: any) => {
+				click = e.latlng;
+				const marker = leaflet
+					.marker([click.lat, click.lng], {
+						icon: leaflet.divIcon({
+							html: '<div></div>',
+							className: 'default'
+						})
+					})
+					.addTo(map);
+
+				bindPopup(marker, (m: any) => {
+					let markerPopup = new MarkerPopup({
+						target: m,
+						props: {
+							marker
+						}
+					});
+				});
 			})
 			.on('moveend', () => {
 				const boundaries = map.getBounds();
@@ -183,6 +227,11 @@
 	});
 
 	$: radius && adjustRadius();
+	$: if ($newLocation) {
+		coords = [click.lat, click.lng];
+		setLocatiionAndRadius();
+		setFires(mapBound);
+	}
 </script>
 
 <div
