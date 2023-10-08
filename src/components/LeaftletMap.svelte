@@ -183,10 +183,12 @@
 	}
 
 	function sendNotifications(): void {
-		for (const fire of fires) {
-			if (isInsideNotificationCircle([fire.latitude, fire.longitude])) {
-				serviceWorkerRegistration.showNotification('There is fire near you!');
-				break;
+		if (fires) {
+			for (const fire of fires) {
+				if (isInsideNotificationCircle([fire.latitude, fire.longitude])) {
+					serviceWorkerRegistration.showNotification('There is fire near you!');
+					break;
+				}
 			}
 		}
 	}
