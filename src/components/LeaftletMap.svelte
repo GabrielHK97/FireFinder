@@ -6,7 +6,7 @@
 	import { iconPerson } from '../icons/person.icon';
 	import type { MapBound } from '../interfaces/mapBound.interface';
 	import axios from 'axios';
-	import { parse } from 'csv-parse';
+	import { parse } from 'csv-parse/sync';
 	import { vapidKey } from '../vapid-key';
 
 	let map: any;
