@@ -242,7 +242,6 @@
 	<div class="w-full h-full flex flex-col justify-center items-center">Loading...</div>
 </div>
 <div class="w-screen h-screen flex flex-col">
-	<div bind:this={mapElement} class="flex-grow w-full" />
 	<div class="p-2 flex flex-col space-y-2">
 		<div>Radius of notification (Km)</div>
 		<div class="flex flex-row space-x-2">
@@ -251,4 +250,5 @@
 			<div>{maxRadius}</div>
 		</div>
 	</div>
+	<div bind:this={mapElement} class="flex-grow w-full" />
 </div>
