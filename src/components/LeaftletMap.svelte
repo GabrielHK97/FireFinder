@@ -228,6 +228,7 @@
 
 	$: radius && adjustRadius();
 	$: if ($newLocation) {
+		$newLocation = false;
 		coords = [click.lat, click.lng];
 		setLocatiionAndRadius();
 		setFires(mapBound);
