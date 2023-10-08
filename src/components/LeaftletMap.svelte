@@ -108,8 +108,6 @@
 		fires.forEach((fire: any) => {
 			leaflet.marker([fire.latitude, fire.longitude], { icon }).addTo(map);
 		});
-
-		sendNotifications();
 	}
 
 	function setMapEvents(): void {
