@@ -81,7 +81,6 @@
 			const zoom = 20 - 7 * radius ** 0.131;
 			map.setZoom(zoom);
 		}
-		sendNotifications();
 	}
 
 	async function setFires(mapBound: MapBound): Promise<void> {
@@ -183,6 +182,7 @@
 	}
 
 	function sendNotifications(): void {
+		console.log(fires);
 		if (fires) {
 			for (const fire of fires) {
 				if (isInsideNotificationCircle([fire.latitude, fire.longitude])) {
@@ -233,6 +233,7 @@
 		coords = [click.lat, click.lng];
 		setLocatiionAndRadius();
 		setFires(mapBound);
+		sendNotifications();
 	}
 </script>
 
