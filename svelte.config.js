@@ -5,7 +5,7 @@ const config = {
   kit: {
     adapter: adapter(),
     files: {
-      serviceWorker: 'worker.js',
+      serviceWorker: '/service-worker.js',
     }
   },
   preprocess: vitePreprocess()
