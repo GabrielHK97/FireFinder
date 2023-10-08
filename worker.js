@@ -7,9 +7,6 @@ self.addEventListener('install', (event) => {});
 self.addEventListener('activate', (event) => {});
 
 self.addEventListener('fetch', (event) => {
-	console.log('test');
-	const promiseChain = self.registration.showNotification(event.data.text());
-	event.waitUntil(promiseChain);
 });
 
 self.addEventListener('push', (event) => {

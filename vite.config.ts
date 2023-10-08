@@ -15,7 +15,7 @@ export default defineConfig({
 	},
 	plugins: [
 		sveltekit(),
-		VitePWA(),
+		//VitePWA(),
 		SvelteKitPWA({filename: 'worker.js' })
 	],
 	optimizeDeps: {
