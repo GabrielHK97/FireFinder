@@ -9,7 +9,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 export default defineConfig({
 	plugins: [
 		sveltekit(),
-		//VitePWA(),
+		VitePWA(),
 		SvelteKitPWA({ strategies: 'injectManifest', filename: 'worker.js' })
 	],
 	optimizeDeps: {
