@@ -4,9 +4,15 @@ import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfil
 import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
 import rollupNodePolyFill from 'rollup-plugin-polyfill-node';
 import { SvelteKitPWA } from '@vite-pwa/sveltekit';
-import { VitePWA } from 'vite-plugin-pwa'
+import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+	server: {
+		fs: {
+			// Allow serving files from one level up to the project root
+			allow: ['..']
+		}
+	},
 	plugins: [
 		sveltekit(),
 		//VitePWA(),
@@ -31,11 +37,6 @@ export default defineConfig({
 	build: {
 		rollupOptions: {
 			plugins: [rollupNodePolyFill()]
-		}
-	},
-	server: {
-		fs: {
-			allow: ['..']
 		}
 	}
 });
