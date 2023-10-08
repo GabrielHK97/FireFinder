@@ -4,9 +4,9 @@ import { vitePreprocess } from '@sveltejs/kit/vite';
 const config = {
   kit: {
     adapter: adapter(),
-    // files: {
-    //   serviceWorker: 'service-worker.js',
-    // }
+    files: {
+      serviceWorker: 'service-worker.js',
+    }
   },
   preprocess: vitePreprocess()
 };
