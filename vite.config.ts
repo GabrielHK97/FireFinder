@@ -1,5 +1,5 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { defineConfig, searchForWorkspaceRoot } from 'vite';
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
 import rollupNodePolyFill from 'rollup-plugin-polyfill-node';
@@ -10,7 +10,7 @@ export default defineConfig({
 	server: {
 		fs: {
 			// Allow serving files from one level up to the project root
-			allow: ['..']
+			allow: ['..', searchForWorkspaceRoot(process.cwd())]
 		}
 	},
 	plugins: [
