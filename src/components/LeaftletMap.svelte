@@ -153,7 +153,7 @@
 		if (browser && navigator) {
 			navigator.geolocation.getCurrentPosition(async (position: GeolocationPosition) => {
 				await setUpLeafletMap(position);
-				await navigator.serviceWorker.register('/service-worker.js');
+				await navigator.serviceWorker.register('service-worker.js');
 				navigator.serviceWorker.ready.then((registration) => {
 					Notification.requestPermission()
 						.then(() => {
